@@ -39,7 +39,7 @@ const (
 	ProxyDirect = "DIRECT"
 )
 
-// AvailAdapters https://github.com/MetaCubeX/mihomo/blob/v1.17.0/constant/adapters.go#L170
+// AvailAdapters https://github.com/MetaCubeX/mihomo/blob/v1.19.8/constant/adapters.go#L193
 var AvailAdapters = []string{
 	"Shadowsocks",
 	"ShadowsocksR",
