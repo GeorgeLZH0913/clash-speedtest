@@ -10,8 +10,9 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+	"strconv"
 
-	"github.com/samber/lo"
+	//"github.com/samber/lo"
 
 	"github.com/starudream/go-lib/core/v2/config"
 	"github.com/starudream/go-lib/core/v2/slog"
@@ -195,18 +196,24 @@ func (t *Task) Render() {
 
 	table := tablew.Render(func(w *tablew.Table) {
 		w.SetAlignment(tablew.ALIGN_CENTER)
-		w.SetHeader([]string{"name", "type", "ip", "country", "conn", "down"})
+		//w.SetHeader([]string{"name", "type", "ip", "country", "conn", "down", "Delay", "StdDev", "LossRate"})
+		w.SetHeader([]string{"name", "type", "ip", "country", "down", "Delay", "StdDev", "LossRate"})
 		for i := 0; i < len(t.proxies); i++ {
 			proxy := t.proxies[i]
 			res, exists := t.results.Load(proxy.Name)
 			if !exists {
 				continue
 			}
-			conn := (res.total.ConnTime / time.Duration(res.threads)).Truncate(time.Millisecond)
+			//conn := (res.total.ConnTime / time.Duration(res.threads)).Truncate(time.Millisecond)
 			down := int64(float64(res.total.TotalSize) / res.total.RespTime.Seconds())
+			resDelay := fmt.Sprintf("%.2f", res.delays.Average)
+			resStdDev := fmt.Sprintf("%.2f", res.delays.StdDev)
+			resLossRate := strconv.Itoa((res.delays.FailureCount) * 10) + "%" 
 			w.Rich(
-				[]string{proxy.Name, proxy.Type, res.Ip, res.Country, lo.Ternary(conn < time.Millisecond, "<1ms", conn.String()), util.BytesSec(down)},
-				[]tablew.Colors{{tablew.Bold}, {}, {}, {}, {connColor(conn)}, {tablew.Bold, downColor(down)}},
+				//[]string{proxy.Name, proxy.Type, res.Ip, res.Country, lo.Ternary(conn < time.Millisecond, "<1ms", conn.String()), util.BytesSec(down), resDelay, resStdDev, resLossRate},
+				//[]tablew.Colors{{tablew.Bold}, {}, {}, {}, {connColor(conn)}, {tablew.Bold, downColor(down)}, {}, {}, {}},
+				[]string{proxy.Name, proxy.Type, res.Ip, res.Country, util.BytesSec(down), resDelay, resStdDev, resLossRate},
+				[]tablew.Colors{{tablew.Bold}, {}, {}, {}, {tablew.Bold, downColor(down)}, {}, {}, {}},
 			)
 		}
 	})
