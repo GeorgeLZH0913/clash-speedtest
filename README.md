@@ -5,11 +5,13 @@
 ![license](https://img.shields.io/github/license/starudream/clash-speedtest?style=for-the-badge)
 
 **自用修改：**  
-1.增加延迟测试，默认地址为 http://www.gstatic.com/generate_204  
+1.增加延迟测试，默认为 http://www.gstatic.com/generate_204  
 2.添加对AnyTLS的测试支持  
+3.结果暂不显示`CONN`连接时间
 **待完成：**  
 1.将测试结果保存到html文件  
 2.自行修改延迟测试地址  
+3.更多自定义测速地址
 
 ## Usage
 
