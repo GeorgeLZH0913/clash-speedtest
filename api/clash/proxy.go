@@ -53,6 +53,7 @@ var AvailAdapters = []string{
 	"Hysteria2",
 	"WireGuard",
 	"Tuic",
+	"AnyTLS",
 }
 
 func (c *Client) GetProxies() (*GetProxiesResp, error) {
