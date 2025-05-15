@@ -4,6 +4,7 @@ import (
 	"math"
 	"fmt"
 	"sync"
+	"time"
 )
 
 type DelayResult struct {
@@ -58,6 +59,7 @@ func (t *Task) TestProxyDelay(name string) (*DelayResult, error) {
 
 			results[index] = res.DelayResponse
 			successData = append(successData, res.DelayResponse)
+			time.Sleep(2 * 100 * time.Millisecond)
 		}(i)
 	}
 	wg.Wait()
